@@ -22,46 +22,58 @@ namespace VSComMariaDB.Controllers
             return vLista;
         }
 
+        [HttpGet("ListaAsync")]
+        public async Task<List<Pessoa>> GetListaAsync()
+        {
+            var _dbContext = new _DbContext();
+
+            var vLista = await _dbContext.Pessoa.ToListAsync();
+
+            return vLista;
+        }
+
         /// <summary>
         /// Pegar os dados de uma pessoa especifica
         /// </summary>
         /// <param name="id"> Id da pessoa </param>
         /// <returns></returns>
         [HttpGet("{id}")]
-        public Pessoa GetPessoa(int id)
+        public async Task<Pessoa> GetPessoa(int id)
         {
             //Instancia o banco de dados
             var _dbContext = new _DbContext();
 
             //Selicionar a Pessoa pelo Id
-            var vPessoa = _dbContext.Pessoa
-                .Where(p => p.Id == id)
-                .FirstOrDefault();
+            //var vPessoa = _dbContext.Pessoa
+            //    .Where(p => p.Id == id)
+            //    .FirstOrDefault();
 
             //var vPessoa = _dbContext.Pessoa.Find(id);
 
+            var vLista = await _dbContext.Pessoa.FindAsync(id);
+
             //Retornar dos dados
-            return vPessoa;
+            return vLista;
         }
 
         [HttpPost]
-        public Pessoa Inserir(Pessoa pessoa)
+        public async Task<Pessoa> Inserir(Pessoa pessoa)
         {   
             var _DbContext = new _DbContext();
 
-            _DbContext.Pessoa.Add(pessoa);
-            _DbContext.SaveChanges();
+           await _DbContext.Pessoa.AddAsync(pessoa);
+            await _DbContext.SaveChangesAsync();
 
             return pessoa;
         }
 
         [HttpPut]
-        public Pessoa Alterar(Pessoa pessoa)
+        public async Task<Pessoa> Alterar(Pessoa pessoa)
         {
             var _dbContext = new _DbContext();
 
-            _dbContext.Pessoa.Entry(pessoa).State = EntityState.Modified;
-            _dbContext.SaveChanges();
+           _dbContext.Pessoa.Entry(pessoa).State = EntityState.Modified;
+           await _dbContext.SaveChangesAsync();
 
             return pessoa;
         }

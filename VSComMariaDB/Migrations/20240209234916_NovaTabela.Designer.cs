@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using VSComMariaDB.Model;
 
@@ -10,9 +11,11 @@ using VSComMariaDB.Model;
 namespace VSComMariaDB.Migrations
 {
     [DbContext(typeof(_DbContext))]
-    partial class _DbContextModelSnapshot : ModelSnapshot
+    [Migration("20240209234916_NovaTabela")]
+    partial class NovaTabela
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -58,9 +61,10 @@ namespace VSComMariaDB.Migrations
 
                     b.Property<string>("Imagem")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(250)
+                        .HasColumnType("varchar(250)");
 
-                    b.Property<string>("Nome")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("varchar(100)");
