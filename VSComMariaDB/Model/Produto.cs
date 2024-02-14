@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 
 namespace VSComMariaDB.Model
 {
@@ -9,8 +10,9 @@ namespace VSComMariaDB.Model
         public string Nome { get; set; }
 
         [MaxLength(100)]
-        public string Descricao { get; set; }
+        public string? Descricao { get; set; }
 
+        [Precision(10,2)]
         public decimal Preco { get; set; }
 
         public bool Disponivel { get; set; }
@@ -18,6 +20,6 @@ namespace VSComMariaDB.Model
         public bool Novidade { get; set; }
 
       
-        public string Imagem { get; set; }
+        public string? Imagem { get; set; }
     }
 }
